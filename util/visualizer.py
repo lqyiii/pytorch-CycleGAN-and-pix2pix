@@ -39,7 +39,8 @@ class Visualizer():
             ncols = self.ncols
             if ncols > 0:
                 ncols = min(ncols, len(visuals))
-                h, w = next(iter(visuals.values())).shape[:2]
+                h, w = next(iter(visuals.values())).data.shape[2:]
+                print h,w
                 table_css = """<style>
                         table {border-collapse: separate; border-spacing:4px; white-space:nowrap; text-align:center}
                         table td {width: %dpx; height: %dpx; padding: 4px; outline: 4px solid black}
@@ -119,7 +120,7 @@ class Visualizer():
     def print_current_losses(self, epoch, i, losses, t, t_data):
         message = '(epoch: %d, iters: %d, time: %.3f, data: %.3f) ' % (epoch, i, t, t_data)
         for k, v in losses.items():
-            message += '%s: %.3f ' % (k, v)
+            message += '%s: %.3f ' % (k, v.data[0])
 
         print(message)
         with open(self.log_name, "a") as log_file:
